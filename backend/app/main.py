@@ -16,13 +16,18 @@ app = FastAPI(
     redoc_url="/api/redoc",
 )
 
-# CORS — allow the Vite dev server
+# CORS — localhost in dev, Vercel frontend URL in production
+# Set FRONTEND_URL env var on Railway to your Vercel deployment URL
+_origins = [
+    "http://localhost:3000",
+    "http://localhost:5173",
+]
+if settings.frontend_url:
+    _origins.append(settings.frontend_url)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://localhost:5173",
-    ],
+    allow_origins=_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

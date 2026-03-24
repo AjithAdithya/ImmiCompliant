@@ -32,6 +32,10 @@ class Settings(BaseSettings):
     # USCIS API
     uscis_api_key: str = ""
 
+    # CORS — set to your Vercel frontend URL in production
+    # e.g. https://immicompliant.vercel.app
+    frontend_url: str = ""
+
     class Config:
         env_file = ".env"
         case_sensitive = False

@@ -11,11 +11,17 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    // In local dev, proxy /api to the FastAPI server.
+    // On Vercel, VITE_API_URL points to the deployed backend project.
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: process.env.VITE_API_URL || 'http://localhost:8000',
         changeOrigin: true,
       },
     },
+  },
+  define: {
+    // Expose API base URL to the app bundle
+    __API_BASE__: JSON.stringify(process.env.VITE_API_URL || ''),
   },
 })

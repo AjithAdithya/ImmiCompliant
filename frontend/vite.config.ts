@@ -24,4 +24,15 @@ export default defineConfig({
     // Expose API base URL to the app bundle
     __API_BASE__: JSON.stringify(process.env.VITE_API_URL || ''),
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          charts: ['recharts'],
+          ui: ['lucide-react'],
+        },
+      },
+    },
+  },
 })
